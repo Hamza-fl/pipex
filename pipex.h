@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <stdio.h>
 
 void	execute(char *av, char **envp);
 char	*find_path(char *command, char **envp);
