@@ -28,23 +28,3 @@ void	*ft_calloc(size_t nof, size_t size)
 	ft_memset(ptr, 0, total_size);
 	return (ptr);
 }
-
-// int main(void)
-// {
-// 	char     *arr;
-// 	size_t  numberofelements = 184;
-
-// 	arr = (char*)ft_calloc(numberofelements, 1);
-// 	if (arr == NULL)
-// 	{
-// 		printf("Memory allocation failed\n");
-// 		return (1);
-// 	}
-// 	for (size_t i = 0; i <= numberofelements; i++)
-// 	{
-// 		printf("arr[%zu] = %c\n", i, arr[i]);
-// 	}
-
-// 	free(arr);
-// 	return (0);
-// }

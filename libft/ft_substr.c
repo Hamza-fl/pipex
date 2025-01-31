@@ -47,10 +47,3 @@ char	*ft_substr(char const *novel, unsigned int start, size_t len)
 	book[i] = '\0';
 	return (book);
 }
-
-int	main(void)
-{
-	char	buffer[] = "hi my name is ismail larhrib";
-	printf("%s\n", ft_substr(buffer, 14, -1));
-	return (0);
-}

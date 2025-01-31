@@ -1,4 +1,5 @@
 #include "pipex.h"
+#include "libft/libft.h"
 void	parent_process(char **av, char **envp, int *fd);
 void	child_process(char **av, char **envp, int *fd);
 

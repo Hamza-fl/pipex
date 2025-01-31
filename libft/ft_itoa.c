@@ -61,11 +61,3 @@ char	*ft_itoa(int nb)
 	num_converter(str, n, len);
 	return (str);
 }
-
-/*
-int main()
-{
-	printf("%s", ft_itoa(-2147483648));
-	return 0;
-}
-*/

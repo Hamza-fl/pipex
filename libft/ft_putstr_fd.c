@@ -27,11 +27,3 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
-
-#include <fcntl.h>
-int main()
-{
-    int fd = open("text.txt", O_CREAT | O_RDWR, 0777);
-    ft_putstr_fd(NULL, fd);
-    return 0;
-}
