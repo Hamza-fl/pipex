@@ -3,47 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilarhrib <ilarhrib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 15:06:43 by ilarhrib          #+#    #+#             */
-/*   Updated: 2024/11/07 16:17:17 by ilarhrib         ###   ########.fr       */
+/*   Created: 2024/11/05 08:36:48 by hfalati           #+#    #+#             */
+/*   Updated: 2024/11/05 08:42:03 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*allocate_substring(size_t len)
+static char	*allocate_str(size_t len)
 {
-	char	*substring;
+	char	*str;
 
-	substring = (char *)malloc(len * sizeof(char) + 1);
-	if (!substring)
+	str = (char *)malloc(len * sizeof(char) + 1);
+	if (!str)
 		return (NULL);
-	substring[len] = '\0';
-	return (substring);
+	str[len] = '\0';
+	return (str);
 }
 
-char	*ft_substr(char const *novel, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	novel_len;
-	char	*book;
+	char	*str;
 	size_t	i;
 
-	novel_len = ft_strlen(novel);
+	if (!s)
+		return (0);
+	novel_len = ft_strlen(s);
 	if (start >= novel_len)
-		return (allocate_substring(0));
+		return (allocate_str(0));
 	if (len > novel_len - start)
 		len = novel_len - start;
-	printf("%zu\n", len);
-	book = allocate_substring(len);
-	if (!book)
+	str = allocate_str(len);
+	if (!str)
 		return (NULL);
 	i = 0;
-	while (i < len && novel[start + i])
+	while (i < len && s[start + i])
 	{
-		book[i] = novel[start + i];
+		str[i] = s[start + i];
 		i++;
 	}
-	book[i] = '\0';
-	return (book);
+	str[i] = '\0';
+	return (str);
 }

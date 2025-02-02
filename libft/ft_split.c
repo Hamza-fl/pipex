@@ -3,124 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilarhrib <ilarhrib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/26 11:32:18 by ilarhrib          #+#    #+#             */
-/*   Updated: 2024/11/06 12:46:57 by ilarhrib         ###   ########.fr       */
+/*   Created: 2024/11/05 09:00:21 by hfalati           #+#    #+#             */
+/*   Updated: 2025/02/02 14:05:07 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_countword(char *str, char c)
+static char	**free_array(char **str, int i)
 {
-	size_t	i;
-	int		wc;
-	size_t	wz;
-
-	i = 0;
-	wc = 0;
-	wz = 1;
-	while (str[i])
+	while (i > 0)
 	{
-		if (wz == 1 && str[i] != c)
-		{
-			wc++;
-			wz = 0;
-		}
-		if (str[i] == c)
-			wz = 1;
-		i++;
+		i--;
+		free(str[i]);
 	}
-	return (wc);
+	free (str);
+	return (0);
 }
 
-static int	ft_strlentillsep(char *str, char set)
+static int	ft_count_words(char const *str, char c)
 {
 	int	i;
+	int	count;
 
 	i = 0;
-	while (str[i] && str[i] != set)
-		i++;
-	return (i);
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			i++;
+		else
+		{
+			count++;
+			while (str[i] && str[i] != c)
+				i++;
+		}
+	}
+	return (count);
 }
 
-static char	*ft_allocword(char *str, char set)
+static char	*ft_putword(char *word, char const *s, int i, int word_len)
 {
-	int		len;
-	int		i;
-	char	*word;
+	int	j;
 
-	i = 0;
-	len = ft_strlentillsep(str, set);
-	word = (char *)malloc((len + 1) * sizeof(char));
-	if (word == NULL)
-		return (NULL);
-	while (i < len)
+	j = 0;
+	while (word_len > 0)
 	{
-		word[i] = str[i];
-		i++;
+		word[j] = s[i - word_len];
+		j++;
+		word_len--;
 	}
-	word[i] = '\0';
+	word[j] = '\0';
 	return (word);
 }
 
-static char	**skip_and_free(const char *s, char **motherstrings, char c, int mi)
+static char	**ft_split_words(char const *s, char c, char **str, int num_words)
 {
-	int	si;
+	int	i;
+	int	word;
+	int	words_len;
 
-	si = 0;
-	while (s[si])
+	i = 0;
+	word = 0;
+	words_len = 0;
+	while (word < num_words)
 	{
-		while (s[si] && s[si] == c)
-			si++;
-		if (s[si])
+		while (s[i] && s[i] == c)
+			i++;
+		while (s[i] && s[i] != c)
 		{
-			motherstrings[mi] = ft_allocword((char *)(s + si), c);
-			if (motherstrings[mi] == NULL)
-			{
-				while (--mi >= 0)
-					free(motherstrings[mi]);
-				free(motherstrings);
-				return (NULL);
-			}
-			mi++;
+			i++;
+			words_len++;
 		}
-		while (s[si] && s[si] != c)
-			si++;
+		str[word] = (char *)malloc(sizeof(char) * (words_len + 1));
+		if (!str[word])
+			return (free_array(str, word));
+		ft_putword (str[word], s, i, words_len);
+		words_len = 0;
+		word++;
 	}
-	motherstrings[mi] = NULL;
-	return (motherstrings);
+	str[word] = NULL;
+	return (str);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		mi;
-	size_t	wc;
-	char	**motherstrings;
+	char			**str;
+	unsigned int	num_words;
 
 	if (!s)
-		return (NULL);
-	mi = 0;
-	wc = (size_t)ft_countword((char *)s, c);
-	motherstrings = (char **)malloc((wc + 1) * sizeof(char *));
-	if (motherstrings == NULL)
-		return (NULL);
-	motherstrings = skip_and_free(s, motherstrings, c, mi);
-	return (motherstrings);
+		return (0);
+	num_words = ft_count_words(s, c);
+	str = (char **)malloc(sizeof(char *) * (num_words + 1));
+	if (!str)
+		return (0);
+	str = ft_split_words(s, c, str, num_words);
+	return (str);
 }
-
-// int main()
-// {
-//     char **motherstrings = ft_split("hello! my name is ismail", ' ');
-//     if (motherstrings)
-//     {
-//         for (int i = 0; motherstrings[i] != NULL; i++)
-//         {
-//             printf("%s\n", motherstrings[i]);
-//             free(motherstrings[i]);
-//         }
-//         free(motherstrings);
-//     }
-//     return 0;
-// }

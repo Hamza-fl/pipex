@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilarhrib <ilarhrib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 12:39:38 by ilarhrib          #+#    #+#             */
-/*   Updated: 2024/11/07 12:42:01 by ilarhrib         ###   ########.fr       */
+/*   Created: 2024/11/05 10:01:19 by hfalati           #+#    #+#             */
+/*   Updated: 2024/11/05 10:04:54 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,3 @@ void	ft_putendl_fd(char *s, int fd)
 	ft_putstr_fd(s, fd);
 	ft_putchar_fd('\n', fd);
 }
-
-
-// #include <fcntl.h>
-// int main()
-// {
-//     int fd = open("test.txt", O_CREAT | O_RDWR, 777);
-//     ft_putendl_fd(NULL, 0);
-//     return 0;
-// }

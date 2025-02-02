@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilarhrib <ilarhrib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 17:00:59 by ilarhrib          #+#    #+#             */
-/*   Updated: 2024/11/04 16:48:38 by ilarhrib         ###   ########.fr       */
+/*   Created: 2024/11/04 13:52:51 by hfalati           #+#    #+#             */
+/*   Updated: 2024/11/04 13:53:59 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,3 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	dst[i] = '\0';
 	return (src_len);
 }
-
-// int main()
-// {
-//     char destbuffer[6] = "ismail";
-//     char src[] = "larhrib";
-//     printf("%zu\n", ft_strlcpy(destbuffer, src, sizeof(destbuffer)));
-//     printf("%s\n", destbuffer);
-//     return 0;
-// }

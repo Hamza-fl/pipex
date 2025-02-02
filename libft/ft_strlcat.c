@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilarhrib <ilarhrib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/23 18:14:40 by ilarhrib          #+#    #+#             */
-/*   Updated: 2024/11/06 12:44:36 by ilarhrib         ###   ########.fr       */
+/*   Created: 2024/11/04 13:55:33 by hfalati           #+#    #+#             */
+/*   Updated: 2024/11/04 13:56:41 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	dst[dl + i] = '\0';
 	return (dl + sl);
 }
-
-// int main()
-// {
-//     // char dst[20] = "123";
-//     // char src[] = "456";
-//     printf("%zu\n", strlcat(NULL, "hello", 0));
-//     // printf("%s\n", dst);
-//     return 0;
-// }

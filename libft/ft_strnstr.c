@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilarhrib <ilarhrib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 21:30:26 by ilarhrib          #+#    #+#             */
-/*   Updated: 2024/11/06 13:02:07 by ilarhrib         ###   ########.fr       */
+/*   Created: 2024/11/04 13:50:34 by hfalati           #+#    #+#             */
+/*   Updated: 2024/11/06 14:23:52 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,3 @@ char	*ft_strnstr(const char *hs, const char *n, size_t len)
 	}
 	return (NULL);
 }
-
-// int main() {
-//     printf("%s", ft_strnstr("jjjfghbrejbgvhfrebhjdefrbv", "bhjde", 29));
-//     return 0;
-// }

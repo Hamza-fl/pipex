@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilarhrib <ilarhrib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hfalati <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 11:06:17 by ilarhrib          #+#    #+#             */
-/*   Updated: 2024/11/07 16:43:37 by ilarhrib         ###   ########.fr       */
+/*   Created: 2024/11/04 13:52:19 by hfalati           #+#    #+#             */
+/*   Updated: 2024/11/06 16:27:48 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,3 @@ int	ft_atoi(const char *str)
 	}
 	return ((int)(result * sign));
 }
-
-// int	main()
-// {
-// 	char *buffer = "10000000000999";
-// 	printf("%d\n", ft_atoi(buffer));
-// 	printf("%d\n", atoi(buffer));
-// 	return 0;
-// }
