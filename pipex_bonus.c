@@ -64,6 +64,7 @@ void	handle_regular_files(char **av, int ac, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
+
 	if (ac >= 5)
 	{
 		if (ft_strncmp(av[1], "here_doc", 8) == 0)
@@ -122,7 +123,8 @@ void	child_process(char *av, char **envp)
 	}
 	else
 	{
+		close(fd[0]);
 		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
+		// dup2(fd[0], STDIN_FILENO);
 	}
 }
