@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:11:28 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 17:37:47 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/02/03 18:18:01 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ char	*find_path(char *command, char **envp);
 void	min_error(void);
 int		open_file(char *av, int i);
 int		get_next_line(char **line);
+char	*extract_regular_word(const char *s, int *i, char c);
+int		is_delimiter(char const *s, char c, int *i);
+char	*process_word(char const *s, char c, int *i, int is_quote_word);
+int		is_quote(char c);
+char	**free_array(char **str, int i);
+char	*extract_quoted_word(const char *s, int *i, char quote_type);
 
 #endif

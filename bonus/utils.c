@@ -12,6 +12,28 @@
 
 #include "pipex.h"
 
+char	*validate_and_get_path(char **command, char **envp)
+{
+	char	*path;
+
+	if (command[0][0] == '.' ||
+		(command[0][0] == '/' && ft_strncmp(command[0], "/bin/", 5) != 0))
+	{
+		write(2, "Error: Command not found\n", 25);
+		exit(126);
+	}
+	if (command[0][0] == '/' && ft_strncmp(command[0], "/bin/", 5) == 0)
+		path = ft_strdup(command[0]);
+	else
+		path = find_path(command[0], envp);
+	if (!path)
+	{
+		write(2, "Error: Command not found\n", 25);
+		exit(127);
+	}
+	return (path);
+}
+
 void	execute(char *av, char **envp)
 {
 	int		i;
@@ -21,32 +43,11 @@ void	execute(char *av, char **envp)
 	command = ft_split(av, ' ');
 	if (!command)
 		error();
-	if (command[0][0] == '.' ||
-		(command[0][0] == '/' && ft_strncmp(command[0], "/bin/", 5) != 0))
-	{
-		i = 0;
-		while (command[i])
-			free(command[i++]);
-		free(command);
-		write(2, "Error: Command not found\n", 25);
-		exit(126);
-	}
-	if (command[0][0] == '/' && ft_strncmp(command[0], "/bin/", 5) == 0)
-		path = ft_strdup(command[0]);
-	else
-		path = find_path(command[0], envp);
-	i = 0;
-	if (!path)
-	{
-		while (command[i])
-			free(command[i++]);
-		free(command);
-		write(2, "Error: Command not found\n", 25);
-		exit(127);
-	}
+	path = validate_and_get_path(command, envp);
 	if (execve(path, command, envp) == -1)
 	{
 		free(path);
+		i = 0;
 		while (command[i])
 			free(command[i++]);
 		free(command);
