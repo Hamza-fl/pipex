@@ -62,3 +62,22 @@ int	get_next_line(char **line)
 	free(buffer);
 	return (r);
 }
+
+void	child_heredoc(int *fd, char *command)
+{
+	char	*line;
+
+	close(fd[0]);
+	while (get_next_line(&line))
+	{
+		if (line && ft_strncmp(line, command, ft_strlen(command)) == 0)
+		{
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
+		write(fd[1], line, ft_strlen(line));
+		free(line);
+	}
+	close(fd[1]);
+	exit(EXIT_SUCCESS);
+}

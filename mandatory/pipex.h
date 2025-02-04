@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:11:28 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 18:18:18 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:58:24 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <stdio.h>
+# include <stdarg.h>
 
 char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s1);
@@ -37,4 +38,6 @@ char	*process_word(char const *s, char c, int *i, int is_quote_word);
 int		is_quote(char c);
 char	**free_array(char **str, int i);
 char	*extract_quoted_word(const char *s, int *i, char quote_type);
+void	ft_putstr_fd(char *s, int fd);
+
 #endif

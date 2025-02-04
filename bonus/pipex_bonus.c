@@ -12,53 +12,116 @@
 
 #include "pipex.h"
 
-void	here_doc(char *command, int ac);
-void	child_process(char *av, char **envp);
-
-void	handle_here_doc(char **av, int ac, char **envp)
+void	here_doc(char *command, int ac)
 {
-	int	i;
-	int	file_out;
-	int	pib;
+	pid_t	pid;
+	int		fd[2];
+
+	if (ac < 6)
+		min_error();
+	
+	if (pipe(fd) == -1)
+		error();
+	
+	pid = fork();
+	if (pid == 0)
+	{
+		child_heredoc(fd, command);
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+	}
+}
+
+
+void child_process(char *av, char **envp)
+{
+	pid_t pid;
+	int fd[2];
+
+	if (pipe(fd) == -1)
+		error();
+	pid = fork();
+	if (pid == -1)
+		error();
+	if (pid == 0)
+	{
+		close(fd[0]);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			error();
+		close(fd[1]);
+		execute(av, envp);
+	}
+	else
+	{
+		close(fd[1]);
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			error();
+		close(fd[0]);
+	}
+}
+
+void handle_here_doc(char **av, int ac, char **envp)
+{
+	int i;
+	int file_out;
+	pid_t pib;
 
 	i = 3;
 	file_out = open_file(av[ac - 1], 0);
+	if (file_out == -1)
+		error();
 	here_doc(av[2], ac);
 	while (i < ac - 2)
 		child_process(av[i++], envp);
 	pib = fork();
+	if (pib == -1)
+		error();
 	if (pib == 0)
 	{
-		dup2(file_out, STDOUT_FILENO);
+		if (dup2(file_out, STDOUT_FILENO) == -1)
+			error();
+		close(file_out);
 		execute(av[ac - 2], envp);
 	}
+	close(file_out);
 	while (wait(NULL) != -1)
 		;
-	close(file_out);
 }
 
-void	handle_regular_files(char **av, int ac, char **envp)
+void handle_regular_files(char **av, int ac, char **envp)
 {
-	int	i;
-	int	file_out;
-	int	file_in;
-	int	pib;
+	int i;
+	int file_out;
+	int file_in;
+	pid_t pib;
 
 	i = 2;
 	file_out = open_file(av[ac - 1], 1);
 	file_in = open_file(av[1], 2);
-	dup2(file_in, STDIN_FILENO);
+	if (file_out == -1 || file_in == -1)
+		error();
+	if (dup2(file_in, STDIN_FILENO) == -1)
+		error();
+	close(file_in);
 	while (i < ac - 2)
 		child_process(av[i++], envp);
 	pib = fork();
+	if (pib == -1)
+		error();
 	if (pib == 0)
 	{
-		dup2(file_out, STDOUT_FILENO);
+		if (dup2(file_out, STDOUT_FILENO) == -1)
+			error();
+		close(file_out);
 		execute(av[ac - 2], envp);
 	}
+	close(file_out);
 	while (wait(NULL) != -1)
 		;
-	close(file_out);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -73,56 +136,4 @@ int	main(int ac, char **av, char **envp)
 	}
 	min_error();
 	return (1);
-}
-
-void	here_doc(char *command, int ac)
-{
-	pid_t	pid;
-	int		fd[2];
-	char	*line;
-
-	if (ac < 6)
-		min_error();
-	if (pipe(fd) == -1)
-		error();
-	pid = fork();
-	if (pid == 0)
-	{
-		close(fd[0]);
-		while (get_next_line(&line))
-		{
-			if (ft_strncmp(line, command, ft_strlen(command) == 0))
-				exit (EXIT_SUCCESS);
-			write (fd[1], line, ft_strlen(line));
-		}
-	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-	}
-}
-
-void	child_process(char *av, char **envp)
-{
-	pid_t	pid;
-	int		fd[2];
-
-	if (pipe(fd) == -1)
-		error();
-	pid = fork();
-	if (pid == -1)
-		error();
-	if (pid == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		execute(av, envp);
-	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		// close(fd[0]);
-	}
 }

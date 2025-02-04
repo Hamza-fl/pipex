@@ -19,7 +19,8 @@ char	*validate_and_get_path(char **command, char **envp)
 	if (command[0][0] == '.' ||
 		(command[0][0] == '/' && ft_strncmp(command[0], "/bin/", 5) != 0))
 	{
-		write(2, "Error: Command not found\n", 25);
+		write(2, "Error: Command not found : ", 27);
+		ft_putstr_fd(command[0], 2);
 		exit(126);
 	}
 	if (command[0][0] == '/' && ft_strncmp(command[0], "/bin/", 5) == 0)
@@ -28,7 +29,8 @@ char	*validate_and_get_path(char **command, char **envp)
 		path = find_path(command[0], envp);
 	if (!path)
 	{
-		write(2, "Error: Command not found\n", 25);
+		write(2, "Error: Command not found : ", 27);
+		ft_putstr_fd(command[0], 2);
 		exit(127);
 	}
 	return (path);
