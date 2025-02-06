@@ -6,13 +6,12 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:11:28 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/04 15:08:10 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/02/05 14:25:59 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
 
 # include <stdlib.h>
 # include <fcntl.h>
@@ -20,6 +19,7 @@
 # include <sys/wait.h>
 # include <stdio.h>
 
+void	setup_files(char **av, int ac, int *file_out, int *file_in);
 char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -43,5 +43,7 @@ char	**free_array(char **str, int i);
 char	*extract_quoted_word(const char *s, int *i, char quote_type);
 void	ft_putstr_fd(char *s, int fd);
 void	child_heredoc(int *fd, char *command);
+char	**read_heredoc_input(char *delimiter, int *line_count);
+void	write_to_pipe(int *fd, char **lines, int line_count);
 
 #endif

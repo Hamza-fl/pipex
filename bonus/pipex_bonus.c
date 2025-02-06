@@ -19,10 +19,8 @@ void	here_doc(char *command, int ac)
 
 	if (ac < 6)
 		min_error();
-	
 	if (pipe(fd) == -1)
 		error();
-	
 	pid = fork();
 	if (pid == 0)
 	{
@@ -36,11 +34,10 @@ void	here_doc(char *command, int ac)
 	}
 }
 
-
-void child_process(char *av, char **envp)
+void	child_process(char *av, char **envp)
 {
-	pid_t pid;
-	int fd[2];
+	pid_t	pid;
+	int		fd[2];
 
 	if (pipe(fd) == -1)
 		error();
@@ -64,11 +61,11 @@ void child_process(char *av, char **envp)
 	}
 }
 
-void handle_here_doc(char **av, int ac, char **envp)
+void	handle_here_doc(char **av, int ac, char **envp)
 {
-	int i;
-	int file_out;
-	pid_t pib;
+	int		i;
+	int		file_out;
+	pid_t	pib;
 
 	i = 3;
 	file_out = open_file(av[ac - 1], 0);
@@ -92,21 +89,15 @@ void handle_here_doc(char **av, int ac, char **envp)
 		;
 }
 
-void handle_regular_files(char **av, int ac, char **envp)
+void	handle_regular_files(char **av, int ac, char **envp)
 {
-	int i;
-	int file_out;
-	int file_in;
-	pid_t pib;
+	int		file_out;
+	int		file_in;
+	int		i;
+	pid_t	pib;
 
 	i = 2;
-	file_out = open_file(av[ac - 1], 1);
-	file_in = open_file(av[1], 2);
-	if (file_out == -1 || file_in == -1)
-		error();
-	if (dup2(file_in, STDIN_FILENO) == -1)
-		error();
-	close(file_in);
+	setup_files(av, ac, &file_out, &file_in);
 	while (i < ac - 2)
 		child_process(av[i++], envp);
 	pib = fork();
@@ -128,7 +119,7 @@ int	main(int ac, char **av, char **envp)
 {
 	if (ac >= 5)
 	{
-		if (ft_strncmp(av[1], "here_doc", 8) == 0)
+		if (ft_strncmp(av[1], "here_doc", 9) == 0)
 			handle_here_doc(av, ac, envp);
 		else
 			handle_regular_files(av, ac, envp);

@@ -15,8 +15,8 @@
 void	min_error(void)
 {
 	write (2, "Error: Bad argument\n", 20);
-	write (2, "Ex: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 47);
-	write (2, "./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <...> <file>\n", 55);
+	write (2, "Ex: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 48);
+	write (2, "OR: ./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <file>\n", 54);
 	exit(EXIT_SUCCESS);
 }
 
@@ -44,40 +44,38 @@ int	get_next_line(char **line)
 	char	c;
 
 	i = 0;
-	r = 0;
-	buffer = (char *)malloc(10000);
+	buffer = (char *)malloc(4096);
 	if (!buffer)
 		return (-1);
 	r = read(0, &c, 1);
 	while (r && c != '\n' && c != '\0')
 	{
-		if (c != '\n' && c != '\0')
-			buffer[i] = c;
-		i++;
+		buffer[i++] = c;
 		r = read(0, &c, 1);
 	}
-	buffer[i] = '\n';
-	buffer[++i] = '\0';
+	if (c == '\n')
+		buffer[i++] = '\n';
+	buffer[i] = '\0';
 	*line = buffer;
-	free(buffer);
 	return (r);
 }
 
 void	child_heredoc(int *fd, char *command)
 {
-	char	*line;
+	char	**lines;
+	int		line_count;
 
-	close(fd[0]);
-	while (get_next_line(&line))
-	{
-		if (line && ft_strncmp(line, command, ft_strlen(command)) == 0)
-		{
-			free(line);
-			exit(EXIT_SUCCESS);
-		}
-		write(fd[1], line, ft_strlen(line));
-		free(line);
-	}
-	close(fd[1]);
-	exit(EXIT_SUCCESS);
+	lines = read_heredoc_input(command, &line_count);
+	write_to_pipe(fd, lines, line_count);
+}
+
+void	setup_files(char **av, int ac, int *file_out, int *file_in)
+{
+	*file_out = open_file(av[ac - 1], 1);
+	*file_in = open_file(av[1], 2);
+	if (*file_out == -1 || *file_in == -1)
+		error();
+	if (dup2(*file_in, STDIN_FILENO) == -1)
+		error();
+	close(*file_in);
 }

@@ -21,25 +21,24 @@ int	main(int ac, char **av, char **envp)
 	pid_t	pid;
 	pid_t	pid2;
 
-	if (ac == 5)
-	{
-		if (av[2][0] == '\0' || av[3][0] == '\0')
-			return (1);
-		if (pipe(fd) == -1)
-			error();
-		pid = fork();
-		if (pid == 0)
-			child_process(av, envp, fd);
-		pid2 = fork();
-		if (pid2 < 0)
-			error();
-		if (pid2 == 0)
-			parent_process(av, envp, fd);
-		close(fd[0]);
-		close(fd[1]);
-		waitpid(pid, NULL, 0);
-		waitpid(pid2, NULL, 0);
-	}
+	if (ac != 5)
+		min_error();
+	if (av[2][0] == '\0' || av[3][0] == '\0')
+		return (1);
+	if (pipe(fd) == -1)
+		error();
+	pid = fork();
+	if (pid == 0)
+		child_process(av, envp, fd);
+	pid2 = fork();
+	if (pid2 < 0)
+		error();
+	if (pid2 == 0)
+		parent_process(av, envp, fd);
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid, NULL, 0);
+	waitpid(pid2, NULL, 0);
 	return (0);
 }
 
@@ -75,4 +74,11 @@ void	parent_process(char **av, char **envp, int *fd)
 	close(fd[0]);
 	close(file_out);
 	execute(av[3], envp);
+}
+
+void	min_error(void)
+{
+	write (2, "Error: Bad argument\n", 20);
+	write (2, "Ex: ./pipex <file1> <cmd1> <...> <cmd2> <file2>\n", 48);
+	exit(EXIT_SUCCESS);
 }

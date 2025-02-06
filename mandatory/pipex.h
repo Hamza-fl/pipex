@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:11:28 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/04 14:58:24 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/02/05 12:27:00 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int		is_quote(char c);
 char	**free_array(char **str, int i);
 char	*extract_quoted_word(const char *s, int *i, char quote_type);
 void	ft_putstr_fd(char *s, int fd);
+void	min_error(void);
 
 #endif
