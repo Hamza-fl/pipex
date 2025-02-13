@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   utils_bonus_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	min_error(void)
 {
@@ -74,8 +74,18 @@ void	setup_files(char **av, int ac, int *file_out, int *file_in)
 	*file_out = open_file(av[ac - 1], 1);
 	*file_in = open_file(av[1], 2);
 	if (*file_out == -1 || *file_in == -1)
-		error();
+    {
+        if (*file_out != -1)
+            close(*file_out);
+        if (*file_in != -1)
+            close(*file_in);
+        error();
+    }
 	if (dup2(*file_in, STDIN_FILENO) == -1)
-		error();
+    {
+        close(*file_out);
+        close(*file_in);
+        error();
+    }
 	close(*file_in);
 }

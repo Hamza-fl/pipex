@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus_0.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,13 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*validate_and_get_path(char **command, char **envp)
 {
 	char	*path;
 
-	if (command[0][0] == '.' && command[0][1] == '/' )
+	if (command[0] == NULL)
+		path = find_path(command[0], envp);
+	else if (command[0][0] == '.' && command[0][1] == '/' )
 		path = ft_strdup(command[0]);
 	else if (command[0][0] == '/')
 		path = ft_strdup(command[0]);

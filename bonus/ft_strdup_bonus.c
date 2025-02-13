@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strdup_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 13:32:52 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 17:00:20 by hfalati          ###   ########.fr       */
+/*   Created: 2024/11/05 08:33:48 by hfalati           #+#    #+#             */
+/*   Updated: 2025/02/11 12:49:28 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_strdup(const char *s1)
 {
 	size_t	i;
+	char	*str;
 
+	str = malloc((ft_strlen(s1) + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
 	i = 0;
-	while (i < n && s1[i] && s2[i])
+	while (s1[i])
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		str[i] = s1[i];
 		i++;
 	}
-	if (i < n)
-		return ((int)((unsigned char)s1[i] - (unsigned char)s2[i]));
-	return (0);
+	str[i] = '\0';
+	return (str);
 }

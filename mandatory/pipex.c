@@ -23,8 +23,6 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 5)
 		min_error();
-	if (av[2][0] == '\0' || av[3][0] == '\0')
-		return (1);
 	if (pipe(fd) == -1)
 		error();
 	pid = fork();
@@ -46,14 +44,25 @@ void	child_process(char **av, char **envp, int *fd)
 {
 	int	file_in;
 
+	close(fd[0]);
 	file_in = open(av[1], O_RDONLY);
 	if (file_in == -1)
+	{
+		close(fd[1]);
 		error();
-	close(fd[0]);
+	}
 	if (dup2(file_in, STDIN_FILENO) == -1)
+	{
+		close(file_in);
+		close(fd[1]);
 		error();
+	}
 	if (dup2(fd[1], STDOUT_FILENO) == -1)
+	{
+		close(file_in);
+		close(fd[1]);
 		error();
+	}
 	close(fd[1]);
 	close(file_in);
 	execute(av[2], envp);
@@ -63,14 +72,25 @@ void	parent_process(char **av, char **envp, int *fd)
 {
 	int	file_out;
 
+	close(fd[1]);
 	file_out = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (file_out == -1)
+	{
+		close(fd[0]);
 		error();
-	close(fd[1]);
+	}
 	if (dup2(fd[0], STDIN_FILENO) == -1)
+	{
+		close(file_out);
+		close(fd[0]);
 		error();
+	}
 	if (dup2(file_out, STDOUT_FILENO) == -1)
+	{
+		close(file_out);
+		close(fd[0]);
 		error();
+	}
 	close(fd[0]);
 	close(file_out);
 	execute(av[3], envp);

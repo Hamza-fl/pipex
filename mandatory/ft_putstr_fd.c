@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:56:18 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/05 12:33:49 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/02/07 12:16:20 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	ft_putstr_fd(char *s, int fd)
 	int	i;
 
 	i = 0;
-	if (fd < 0)
-		return ;
 	if (!s)
+	{
+		write (2, "\n", 1);
 		return ;
+	}
 	while (s[i])
 	{
 		write(fd, &s[i], 1);

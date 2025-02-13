@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_utils.c                                   :+:      :+:    :+:   */
+/*   ft_split_utils_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 17:54:12 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 18:20:44 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/02/11 12:49:25 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*extract_regular_word(const char *s, int *i, char c)
 {

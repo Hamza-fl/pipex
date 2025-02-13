@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 13:11:47 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 17:00:17 by hfalati          ###   ########.fr       */
+/*   Created: 2024/11/04 13:52:51 by hfalati           #+#    #+#             */
+/*   Updated: 2025/02/11 12:49:35 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	len;
+	size_t	src_len;
+	size_t	i;
 
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	return (len);
+	src_len = 0;
+	while (src[src_len])
+		src_len++;
+	if (dstsize == 0)
+		return (src_len);
+	i = 0;
+	while ((i < (dstsize - 1)) && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (src_len);
 }

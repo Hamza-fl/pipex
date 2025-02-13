@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 13:52:51 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 17:00:14 by hfalati          ###   ########.fr       */
+/*   Created: 2024/11/04 13:50:34 by hfalati           #+#    #+#             */
+/*   Updated: 2025/02/11 12:49:42 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+char	*ft_strnstr(const char *hs, const char *n, size_t len)
 {
-	size_t	src_len;
 	size_t	i;
+	size_t	j;
+	size_t	nlen;
 
-	src_len = 0;
-	while (src[src_len])
-		src_len++;
-	if (dstsize == 0)
-		return (src_len);
+	nlen = ft_strlen(n);
+	if (nlen == 0)
+		return ((char *)hs);
+	if (len == 0)
+		return (NULL);
 	i = 0;
-	while ((i < (dstsize - 1)) && src[i])
+	while (i + nlen <= len && hs[i] != '\0')
 	{
-		dst[i] = src[i];
+		j = 0;
+		while (j < nlen && hs[i + j] == n[j] && (i + j) < len)
+			j++;
+		if (j == nlen)
+			return ((char *)(hs + i));
 		i++;
 	}
-	dst[i] = '\0';
-	return (src_len);
+	return (NULL);
 }

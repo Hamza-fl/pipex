@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 08:42:17 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 17:00:07 by hfalati          ###   ########.fr       */
+/*   Created: 2024/11/05 09:56:18 by hfalati           #+#    #+#             */
+/*   Updated: 2025/02/11 12:49:19 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	*s3;
+	int	i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	s3 = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (s3 == NULL)
-		return (NULL);
-	ft_strlcpy(s3, s1, ft_strlen(s1) + 1);
-	ft_strlcat(s3, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
-	return (s3);
+	i = 0;
+	if (!s)
+	{
+		write (2, "\n", 1);
+		return ;
+	}
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+	write (2, "\n", 1);
 }

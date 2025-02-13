@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utlis_bonus_1.c                                    :+:      :+:    :+:   */
+/*   utlis_bonus_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 14:21:08 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/06 10:11:37 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/02/11 12:50:16 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	**allocate_lines_array(char **lines, int *capacity, int line_count)
 {
 	char	**new_lines;
+	int		i;
 
 	if (line_count >= *capacity)
 	{
-		*capacity *= 2;
-		new_lines = realloc(lines, sizeof(char *) * *capacity);
+		new_lines = (char **)malloc(sizeof(char *) * (*capacity * 2));
 		if (!new_lines)
 			return (NULL);
-		lines = new_lines;
+		i = 0;
+		while (i < line_count)
+		{
+			new_lines[i] = lines[i];
+			i++;
+		}
+		while (i < (*capacity * 2))
+		{
+			new_lines[i] = NULL;
+			i++;
+		}
+		free(lines);
+		*capacity *= 2;
+		return (new_lines);
 	}
 	return (lines);
 }
@@ -51,7 +64,7 @@ char	**process_heredoc_input(char **lines, char *delimiter, int *line_count)
 		write(STDIN_FILENO, "> ", 2);
 		if (get_next_line(&line) <= 0)
 			break ;
-		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
+		if (ft_strncmp(line, delimiter, ft_strlen(line) - 1) == 0)
 		{
 			free(line);
 			break ;

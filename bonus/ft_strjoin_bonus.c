@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 13:50:34 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/03 17:00:23 by hfalati          ###   ########.fr       */
+/*   Created: 2024/11/05 08:42:17 by hfalati           #+#    #+#             */
+/*   Updated: 2025/02/11 12:49:30 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-char	*ft_strnstr(const char *hs, const char *n, size_t len)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	i;
-	size_t	j;
-	size_t	nlen;
+	char	*s3;
 
-	nlen = ft_strlen(n);
-	if (nlen == 0)
-		return ((char *)hs);
-	if (len == 0)
+	if (!s1 || !s2)
 		return (NULL);
-	i = 0;
-	while (i + nlen <= len && hs[i] != '\0')
-	{
-		j = 0;
-		while (j < nlen && hs[i + j] == n[j] && (i + j) < len)
-			j++;
-		if (j == nlen)
-			return ((char *)(hs + i));
-		i++;
-	}
-	return (NULL);
+	s3 = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (s3 == NULL)
+		return (NULL);
+	ft_strlcpy(s3, s1, ft_strlen(s1) + 1);
+	ft_strlcat(s3, s2, ft_strlen(s1) + ft_strlen(s2) + 1);
+	return (s3);
 }

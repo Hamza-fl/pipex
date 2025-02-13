@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strncmp_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 09:56:18 by hfalati           #+#    #+#             */
-/*   Updated: 2025/02/05 10:31:21 by hfalati          ###   ########.fr       */
+/*   Created: 2024/11/04 13:32:52 by hfalati           #+#    #+#             */
+/*   Updated: 2025/02/11 12:49:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	if (fd < 0)
-		return ;
-	if (!s)
-		return ;
-	while (s[i])
+	while (i < n && s1[i] && s2[i])
 	{
-		write(fd, &s[i], 1);
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
 	}
-	write (2, "\n", 1);
+	if (i < n)
+		return ((int)((unsigned char)s1[i] - (unsigned char)s2[i]));
+	return (0);
 }
